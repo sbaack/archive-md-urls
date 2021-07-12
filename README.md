@@ -10,7 +10,7 @@ This is very useful when you use a static site generator for your personal homep
 
 Input file `example_blogpost.md`:
 
-```md
+```
 Tile: Example blog post
 author: Stefan
 date: 2013-11-06
@@ -30,7 +30,7 @@ And finally, [here](www.some-madeup-link-that-hasnt-been-archived.com) we link t
 
 Output from `archive-md-urls example_blogpost.md`:
 
-```md
+```
 Tile: Example blog post
 author: Stefan
 date: 2013-11-06
@@ -55,13 +55,13 @@ Note how only the first link to example.com has been altered and points to a sna
 You can install `archive-md-urls` via pip:
 
 ```sh
-> pip install archive-md-urls
+pip install archive-md-urls
 ```
 
 However, using [Pipx](https://pypa.github.io/pipx/) is recommended:
 
 ```sh
-> pipx install archive-md-urls
+pipx install archive-md-urls
 ```
 
 ## Usage
@@ -72,13 +72,13 @@ Once installed, you can pass any number of Markdown files or directories contain
 
 ```sh
 # Update two files
-> archive-md-urls my-file.md another-file.md
+archive-md-urls my-file.md another-file.md
 Updated 13 links in 2 files.
 # Update files in a directory
-> archive-md-urls myblog/content/blog/2014
+archive-md-urls myblog/content/blog/2014
 Updated 97 links in 20 files.
 # You can also combine files and directories
-> archive-md-urls myblog/content/blosg/2014 my-file.md
+archive-md-urls myblog/content/blosg/2014 my-file.md
 Updated 103 links 21 files.
 ```
 
@@ -86,7 +86,7 @@ By default, directories are not searched recursively for Markdown files. For rec
 
 ```sh
 # Update URLs in all Markdown files of myblog
-> archive-md-urls -r myblog/content
+archive-md-urls -r myblog/content
 Updated 160 links in 32 files.
 ```
 
