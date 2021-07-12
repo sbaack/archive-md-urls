@@ -3,8 +3,8 @@
 from pathlib import Path
 from typing import Optional
 
-from gather_snapshots import gather_snapshots
-from scan_md import scan_md
+from archive_md_urls.gather_snapshots import gather_snapshots
+from archive_md_urls.scan_md import scan_md
 
 
 async def update_files(files: list[Path]) -> None:

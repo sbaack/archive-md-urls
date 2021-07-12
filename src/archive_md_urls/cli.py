@@ -5,7 +5,7 @@ import asyncio
 import sys
 from pathlib import Path
 
-from update_files import update_files
+from archive_md_urls.update_files import update_files
 
 
 def get_md_files(items: list[Path], recursive: bool) -> list[Path]:
@@ -55,7 +55,7 @@ def parse_args() -> argparse.Namespace:
         "items",
         nargs='+',
         type=Path,
-        help="Markdown file, or directory containing Markdown files. You can specify " 
+        help="Markdown file, or directory containing Markdown files. You can specify "
              "multiple items and combine individual files with directories"
     )
     argparser.add_argument(
