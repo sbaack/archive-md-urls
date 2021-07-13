@@ -8,7 +8,7 @@ import markdown
 from bs4 import BeautifulSoup
 
 # List of URLs considered stable and thus ignored
-STABLE_URLS: tuple[str] = (
+STABLE_URLS: tuple[str, ...] = (
     # archive.org snapshots
     "web.archive.org/web/",
     # Pelican intra-site links
