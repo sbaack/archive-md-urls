@@ -1,5 +1,6 @@
 """Turn URLs in Markdown files to Wayback snapshots."""
 
+import re
 from pathlib import Path
 from typing import Optional
 
@@ -57,5 +58,7 @@ def update_md_source(md_source: str, wayback_urls: dict[str, Optional[str]]) -> 
     for url, snapshot in wayback_urls.items():
         # Skip cases where no Wayback Snapshot was found
         if snapshot:
-            md_source = md_source.replace(url, snapshot)
+            # Only replace strings which are == url if they are preceded and
+            # followed by braces to avoid mismatches
+            md_source = re.sub(fr"(?<=\(){url}(?=\))", snapshot, md_source)
     return md_source
