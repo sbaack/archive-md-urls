@@ -1,0 +1,1 @@
+This file is only for testing the get_md_files function that collects Markdown files in subdirectories with recursive == True.
