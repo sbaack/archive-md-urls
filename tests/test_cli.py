@@ -2,7 +2,8 @@ import unittest
 from pathlib import Path
 
 from archive_md_urls import cli
-from tests.testfiles import CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3
+from tests.testfiles import (CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3,
+                             TEST_YAML)
 
 
 class TestCli(unittest.TestCase):
@@ -12,10 +13,12 @@ class TestCli(unittest.TestCase):
         """Test if Markdown files are collected correctly."""
         # Create list of all files for recursive and non-recursive search in test_data
         all_files_recursive: list[Path] = [
-            CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3,
+            CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3, TEST_YAML,
             Path("tests/test_data/subdir/empty_testfile.md")
         ]
-        all_files_no_rec: list[Path] = [CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3]
+        all_files_no_rec: list[Path] = [
+            CONVERTED_FILE, TEST_MD1, TEST_MD2, TEST_MD3, TEST_YAML
+        ]
         # Test single file
         self.assertEqual(cli.get_md_files([TEST_MD1], False), [TEST_MD1])
         # Test two individual files

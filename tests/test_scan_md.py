@@ -4,7 +4,8 @@ from unittest import mock
 
 from archive_md_urls import scan_md
 from tests.testfiles import (TEST_MD1, TEST_MD1_SOURCE, TEST_MD2,
-                             TEST_MD2_SOURCE, TEST_MD3, TEST_MD3_SOURCE)
+                             TEST_MD2_SOURCE, TEST_MD3, TEST_MD3_SOURCE,
+                             TEST_YAML_SOURCE)
 
 
 class TestScanMD(unittest.TestCase):
@@ -40,6 +41,8 @@ class TestScanMD(unittest.TestCase):
     def test_convert_markdown(self) -> None:
         """Test if date correctly extracted from metadata."""
         html, date = scan_md.convert_markdown(TEST_MD1_SOURCE)
+        self.assertEqual(date, "2014-04-28")
+        html, date = scan_md.convert_markdown(TEST_YAML_SOURCE)
         self.assertEqual(date, "2014-04-28")
         html, date = scan_md.convert_markdown(TEST_MD2_SOURCE)
         self.assertEqual(date, None)
