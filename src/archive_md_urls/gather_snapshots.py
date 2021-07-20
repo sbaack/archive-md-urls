@@ -11,8 +11,10 @@ import sys
 from typing import Any, Optional
 
 import httpx
+import tenacity
 
 
+@tenacity.retry(stop=tenacity.stop_after_attempt(5), wait=tenacity.wait_fixed(2))
 async def call_api(client: httpx.AsyncClient, api_call: str) -> dict[str, Any]:
     """Call Wayback Machine API and return JSON response.
 
@@ -37,19 +39,9 @@ async def call_api(client: httpx.AsyncClient, api_call: str) -> dict[str, Any]:
     Returns:
         dict[str, Any]: JSON API response
     """
-    tries: int = 0
-    while tries < 5:
-        try:
-            response: httpx.Response = await client.get(api_call)
-            response.raise_for_status()
-            return response.json()
-        except httpx.HTTPError:
-            tries += 1
-            print("Encountered HTTP error, waiting 5 seconds.")
-            await asyncio.sleep(5)
-            continue
-    else:
-        sys.exit("API unresponsive, try again later.")
+    response: httpx.Response = await client.get(api_call)
+    response.raise_for_status()
+    return response.json()
 
 
 def build_api_call(url: str, timestamp: Optional[str] = None) -> str:
@@ -100,7 +92,7 @@ async def gather_snapshots(
         dict[str, Optional[str]]: API call results with original URL as keys and Wayback
                                   snapshot URLs as values
     """
-    async with httpx.AsyncClient(timeout=10) as client:
+    async with httpx.AsyncClient(timeout=None) as client:
         # Create task list (with each task being an API call)
         tasks: list[asyncio.Task[Any]] = []
         for url in urls:
@@ -108,7 +100,10 @@ async def gather_snapshots(
                 asyncio.create_task(call_api(client, build_api_call(url, timestamp)))
             )
         # Execute tasks and gather results
-        api_responses: list[dict[str, Any]] = await asyncio.gather(*tasks)
+        try:
+            api_responses: list[dict[str, Any]] = await asyncio.gather(*tasks)
+        except tenacity.RetryError:
+            sys.exit("API appears unresponsive, please try again later.")
         # Build url-snapshot pairs from results
         wayback_urls: dict[str, Optional[str]] = {}
         for api_response in api_responses:

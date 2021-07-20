@@ -31,3 +31,5 @@ sniffio==1.2.0
     #   httpx
 soupsieve==2.2.1
     # via beautifulsoup4
+tenacity==8.0.1
+    # via archive-md-urls (setup.cfg)
