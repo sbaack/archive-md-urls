@@ -13,8 +13,7 @@ from typing import Any, Optional
 import httpx
 
 
-async def call_api(client: httpx.AsyncClient, url: str,
-                   timestamp: Optional[str] = None) -> dict[str, Any]:
+async def call_api(client: httpx.AsyncClient, api_call: str) -> dict[str, Any]:
     """Call Wayback Machine API and return JSON response.
 
     If API is unresponsive, sleep task for five seconds for a maximum of five times.
@@ -33,17 +32,11 @@ async def call_api(client: httpx.AsyncClient, url: str,
 
     Args:
         client (httpx.AsyncClient): HTTPX AsyncClient to make API calls
-        url (str): URL to be searched in the Wayback Machine
-        timestamp (Optional[str]): Timestamp for desired snapshot
+        api_call (str): Valid call to archive.org API
 
     Returns:
         dict[str, Any]: JSON API response
     """
-    # Construct URL for API call
-    api_call: str = f"https://archive.org/wayback/available?url={url}"
-    if timestamp:
-        api_call += f"&timestamp={timestamp}"
-    # Call API
     tries: int = 0
     while tries < 5:
         try:
@@ -57,6 +50,22 @@ async def call_api(client: httpx.AsyncClient, url: str,
             continue
     else:
         sys.exit("API unresponsive, try again later.")
+
+
+def build_api_call(url: str, timestamp: Optional[str] = None) -> str:
+    """Return valid achive.org API call.
+
+    Args:
+        url (str): URL to be searched in the Wayback Machine
+        timestamp (Optional[str], optional): Timestamp for desired snapshot
+
+    Returns:
+        str: Valid archive.org API call
+    """
+    api_call: str = f"https://archive.org/wayback/available?url={url}"
+    if timestamp:
+        api_call += f"&timestamp={timestamp}"
+    return api_call
 
 
 def get_closest(api_response: dict[str, Any]) -> Optional[str]:
@@ -95,7 +104,9 @@ async def gather_snapshots(
         # Create task list (with each task being an API call)
         tasks: list[asyncio.Task[Any]] = []
         for url in urls:
-            tasks.append(asyncio.create_task(call_api(client, url, timestamp)))
+            tasks.append(
+                asyncio.create_task(call_api(client, build_api_call(url, timestamp)))
+            )
         # Execute tasks and gather results
         api_responses: list[dict[str, Any]] = await asyncio.gather(*tasks)
         # Build url-snapshot pairs from results
