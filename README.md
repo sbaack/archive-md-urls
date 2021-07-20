@@ -96,7 +96,7 @@ Note that Markdown files are identified by the file ending `.md`, other file end
 
 First, `archve-md-urls` checks for a `date` field in Markdown metadata blocks (see [Python Markdown's format](https://python-markdown.github.io/extensions/meta_data/#syntax) and [YAML front matter](https://jekyllrb.com/docs/front-matter/)). If that fails, it tries to extract a date from the name of the file following [Jekyll's naming convention](https://jekyllrb.com/docs/structure/) where blog posts are named `YEAR-MONTH-DAY-title`.
 
-Currently, `archive-md-urls` recognizes dates in the formats `YYYY-MM-DD` and `YYYY-DD-DD hh:msm`.
+Currently, `archive-md-urls` recognizes dates in the formats `YYYY-MM-DD` and `YYYY-DD-DD hh:mm`.
 
 ## A note about speed
 
