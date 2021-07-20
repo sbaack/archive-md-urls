@@ -18,8 +18,7 @@ import tenacity
 async def call_api(client: httpx.AsyncClient, api_call: str) -> dict[str, Any]:
     """Call Wayback Machine API and return JSON response.
 
-    If API is unresponsive, sleep task for five seconds for a maximum of five times.
-    After five unsuccessful attempts, exit program.
+    If API is unresponsive, sleep task for two seconds for a maximum of five times.
 
     Expect the following API responses:
 
@@ -99,7 +98,7 @@ async def gather_snapshots(
             tasks.append(
                 asyncio.create_task(call_api(client, build_api_call(url, timestamp)))
             )
-        # Execute tasks and gather results
+        # Execute tasks and gather results. If a task failed five times, exit program
         try:
             api_responses: list[dict[str, Any]] = await asyncio.gather(*tasks)
         except tenacity.RetryError:
