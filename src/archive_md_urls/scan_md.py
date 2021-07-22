@@ -1,9 +1,9 @@
 """Extract dates and URLs from Markdown files."""
 
-from datetime import datetime
 from pathlib import Path
 from typing import Optional
 
+import dateutil.parser
 import markdown
 from bs4 import BeautifulSoup
 
@@ -58,7 +58,7 @@ def scan_md(md_source: str, md_file: Path) -> tuple[Optional[str], list[str]]:
     To get the date, first try to extract it from Markdown meta information. If no date
     found, try to extract date from file name by following the Jekyll naming convention
     where files for blog posts start with YYYY-MM-DD. Next, try to format date for
-    Wayback Machine API as YYYYMMDD or YYYYMMDDhhmm.
+    Wayback Machine API as YYYYMMDDhhmm.
 
     Args:
         md_source (str): Contents of the Markdown file
@@ -95,8 +95,8 @@ def convert_markdown(md_source: str) -> tuple[str, Optional[str]]:
 def format_date(date: str) -> Optional[str]:
     """Format date according to Wayback Machine API format.
 
-    Recognizes dates in two formats: YYYY-MM-DD and YYYY-MM-DD hh:mm. These formats are
-    returned as YYYYMMDD or YYYYMMDDhhmm. If format isn't recognized, return None.
+    Use dateutil.parser to recognize dates and return them as YYYYMMDDhhmm. If hour and
+    minute aren't provided, they are set to 0. If format isn't recognized, return None.
 
     Args:
         date (str): Date extracted from Markdown metadata or file name
@@ -105,19 +105,9 @@ def format_date(date: str) -> Optional[str]:
         Optional[str]: Date formatted as YYYYMMDDhhmm
     """
     try:
-        # To capture dates with and without hour and minute, adjust strptime
-        # format depending on length of split date string
-        md_date: list[str] = date.split(" ")
-        if len(md_date) == 2:
-            # Date contains hour and minute
-            formatted_date = datetime.strptime(date, "%Y-%m-%d %H:%M")
-            return formatted_date.strftime("%Y%m%d%H%M")
-        else:
-            # Date only contains year, month and day
-            formatted_date = datetime.strptime(date, "%Y-%m-%d")
-            return formatted_date.strftime("%Y%m%d")
+        return dateutil.parser.parse(date).strftime("%Y%m%d%H%M")
     # Malformatted date or no date at the beginning of file name
-    except (KeyError, ValueError):
+    except dateutil.parser._parser.ParserError:
         return None
 
 

@@ -31,12 +31,21 @@ class TestScanMD(unittest.TestCase):
     def test_format_date(self) -> None:
         """Test if date is correctly formatted or returned as None."""
         # Accepted inputs and expected results
-        self.assertEqual(scan_md.format_date("2010-03-07"), "20100307")
+        self.assertEqual(scan_md.format_date("2010-03-07"), "201003070000")
         self.assertEqual(scan_md.format_date("2013-04-11 14:50"), "201304111450")
-        # Various inputs that should raise KeyError or ValueError and thus return None
+        self.assertEqual(scan_md.format_date("2015-05-17 17:49:59"), "201505171749")
+        self.assertEqual(scan_md.format_date("20.08.2018"), "201808200000")
+        # Hugo default
+        self.assertEqual(
+            scan_md.format_date("2019-03-26T08:47:11+01:00"), "201903260847"
+        )
+        # A human readable date string
+        self.assertEqual(
+            scan_md.format_date("Monday, October 10, 2014"), "201410100000"
+        )
+        # Various inputs that should raise dateutil ParserError and thus return None
         self.assertEqual(scan_md.format_date("some wrong string"), None)
-        self.assertEqual(scan_md.format_date("2015-05-17 17:49:99"), None)
-        self.assertEqual(scan_md.format_date("20.08.2018"), None)
+        self.assertEqual(scan_md.format_date("2014-04-10 13:10:99"), None)
 
     def test_convert_markdown(self) -> None:
         """Test if date correctly extracted from metadata."""
