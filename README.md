@@ -99,3 +99,17 @@ First, `archve-md-urls` checks for a `date` field in Markdown metadata blocks (s
 ## A note about speed
 
 `archive-md-urls` uses [asyncio](https://docs.python.org/3/library/asyncio.html) with [HTTPX](https://www.python-httpx.org/) to make asynchronous API calls. However, do not expect to get fast results, especially (but not only) when you try to change a larger amount of URLs. The [Wayback Machine API](https://archive.org/help/wayback_api.php) can be slow or even unavailable. If `archive-md-urls` has to cancel the operation because of that, just re-run it on the same files again later. Links that have already been updated before will be skipped because archive.org links are considered stable.
+
+## Setup for local development
+
+After cloning this repository and creating a virtual environment for it, install dev-requirements and your local copy of `archive-md-urls` as an editable package:
+
+```sh
+python -m pip install -r dev-requirements.txt -e .
+```
+
+To upgrade the dependencies listed in `dev-requirements.txt`, use [`pip-tools`](https://github.com/jazzband/pip-tools):
+
+```sh
+pip-compile --upgrade --extra=dev -o dev-requirements.txt setup.cfg
+```
