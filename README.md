@@ -1,10 +1,10 @@
 # archive-md-urls: Turn URLs into archive.org snapshots in Markdown
 
-`archive-md-urls` scans Markdown files for URLs and if possible turns them into links to snapshots from [archive.org](https://archive.org/). If a publication date can be extracted from the file ([more info](#how-publication-dates-are-detected)), the snapshots closest to this date will be used. If no date can be found, the latest available snapshots are used instead.
+`archive-md-urls` scans Markdown files for URLs and if possible turns them into links to snapshots from [archive.org](https://archive.org/). If a publication date can be extracted from the file ([more info](https://github.com/sbaack/archive-md-urls/wiki/How-publication-dates-are-detected)), the snapshots closest to this date will be used. If no date can be found, the latest available snapshots are used instead.
 
 This is very useful when you use a static site generator for your personal homepage that supports Markdown for writing blogposts and pages, e.g. [Pelican](https://blog.getpelican.com/), [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/). Older content published years ago is likely to contain [link rot](https://en.wikipedia.org/wiki/Link_rot): links that are simply broken or now point to a different target compared to when you wrote the content. In an ideal scenario, `archive-md-urls` will not only fix these URLs, but also link to a snapshot that shows how a website or social media profile/post looked like when you wrote the content.
 
-`archive-md-urls` tries to be smart and does not simply replace every URL it finds. Instead, it uses a [list of URLs which are considered 'stable'](https://github.com/sbaack/archive-md-urls/blob/ca28f9ef06d2e872ef57612322cd7232b6caa88d/src/archive_md_urls/scan_md.py#L10) and are therefore ignored: URLs that already point to archive.org snapshots, intra-site links (e.g. a link to another blogpost on the same homepage) and URLs that contain [persistent identifiers](http://en.wikipedia.org/wiki/Persistent_identifier).
+`archive-md-urls` tries to be smart and does not simply replace every URL it finds. Instead, it uses a [list of URLs which are considered 'stable'](https://github.com/sbaack/archive-md-urls/wiki/List-of-stable-URLs) and are therefore ignored: URLs that already point to archive.org snapshots, intra-site links (e.g. a link to another blogpost on the same homepage) and URLs that contain [persistent identifiers](http://en.wikipedia.org/wiki/Persistent_identifier).
 
 ## Example showcase
 
@@ -91,10 +91,6 @@ Updated 160 links in 32 files.
 ```
 
 Note that Markdown files are identified by the file ending `.md`, other file endings are ignored.
-
-## How publication dates are detected
-
-First, `archve-md-urls` checks for a `date` field in Markdown metadata blocks (see [Python Markdown's format](https://python-markdown.github.io/extensions/meta_data/#syntax) and [YAML front matter](https://jekyllrb.com/docs/front-matter/)). If that fails, it tries to extract a date from the name of the file following [Jekyll's naming convention](https://jekyllrb.com/docs/structure/) where blog posts are named `YEAR-MONTH-DAY-title`. [dateutil](https://github.com/dateutil/dateutil) is used to recognize a broad range of date formats.
 
 ## A note about speed
 
