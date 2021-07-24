@@ -98,14 +98,16 @@ Note that Markdown files are identified by the file ending `.md`, other file end
 
 ## Setup for local development
 
-After cloning this repository and creating a virtual environment for it, install dev-requirements and your local copy of `archive-md-urls` as an editable package:
-
 ```sh
-python -m pip install -r dev-requirements.txt -e .
+git clone https://github.com/sbaack/archive-md-urls.git
+cd archive-md-urls
+# Create and activate a virtualenv with your preferred tool, then install dev-requirements:
+python -m pip install -r dev-requirements.txt
 ```
 
 To upgrade the dependencies listed in `dev-requirements.txt`, use [`pip-tools`](https://github.com/jazzband/pip-tools):
 
 ```sh
-pip-compile --upgrade --extra=dev -o dev-requirements.txt setup.cfg
+pip-compile --upgrade -o dev-requirements.txt dev-requirements.in
+pip-sync dev-requirements.txt
 ```
