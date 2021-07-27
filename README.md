@@ -78,7 +78,7 @@ Updated 13 links in 2 files.
 archive-md-urls myblog/content/blog/2014
 Updated 97 links in 20 files.
 # You can also combine files and directories
-archive-md-urls myblog/content/blosg/2014 my-file.md
+archive-md-urls myblog/content/blog/2014 my-file.md
 Updated 103 links 21 files.
 ```
 
