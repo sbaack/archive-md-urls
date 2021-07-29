@@ -1,4 +1,4 @@
-# archive-md-urls: Turn URLs into archive.org snapshots in Markdown
+# archive-md-urls: Turn URLs in Markdown files into archive.org snapshots
 
 `archive-md-urls` scans Markdown files for URLs and if possible turns them into links to snapshots from [archive.org](https://archive.org/). If a publication date can be extracted from the file ([more info](https://github.com/sbaack/archive-md-urls/wiki/How-publication-dates-are-detected)), the snapshots closest to this date will be used. If no date can be found, the latest available snapshots are used instead.
 
