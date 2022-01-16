@@ -10,7 +10,7 @@ This is very useful when you use a static site generator for your personal homep
 
 Input file `example_blogpost.md`:
 
-```
+```markdown
 Tile: Example blog post
 author: Stefan
 date: 2013-11-06
@@ -30,7 +30,7 @@ And finally, [here](www.some-madeup-link-that-hasnt-been-archived.com) we link t
 
 Output from `archive-md-urls example_blogpost.md`:
 
-```
+```markdown
 Tile: Example blog post
 author: Stefan
 date: 2013-11-06
@@ -54,13 +54,13 @@ Note how only the first link to example.com has been altered and points to a sna
 
 You can install `archive-md-urls` via pip:
 
-```sh
+```bash
 pip install archive-md-urls
 ```
 
 However, using [Pipx](https://pypa.github.io/pipx/) is recommended:
 
-```sh
+```bash
 pipx install archive-md-urls
 ```
 
@@ -70,7 +70,7 @@ pipx install archive-md-urls
 
 Once installed, you can pass any number of Markdown files or directories containing Markdown files to `archive-md-urls`:
 
-```sh
+```bash
 # Update two files
 archive-md-urls my-file.md another-file.md
 Updated 13 links in 2 files.
@@ -84,7 +84,7 @@ Updated 103 links 21 files.
 
 By default, directories are not searched recursively for Markdown files. For recursive search, use the `-r` flag (use this with caution!):
 
-```sh
+```bash
 # Update URLs in all Markdown files of myblog
 archive-md-urls -r myblog/content
 Updated 160 links in 32 files.
@@ -98,16 +98,21 @@ Note that Markdown files are identified by the file ending `.md`, other file end
 
 ## Setup for local development
 
-```sh
+```bash
 git clone https://github.com/sbaack/archive-md-urls.git
 cd archive-md-urls
-# Create and activate a virtualenv with your preferred tool, then install dev-requirements:
-python -m pip install -r dev-requirements.txt
+# Create and activate a virtualenv with your preferred tool. Example:
+python -m venv project_venv
+source project_venv/bin/activate
+# Install dev-requirements:
+make setup  # Executes python -m pip install -r dev-requirements.txt
 ```
 
-To upgrade the dependencies listed in `dev-requirements.txt`, use [`pip-tools`](https://github.com/jazzband/pip-tools):
+Use [`pip-tools`](https://github.com/jazzband/pip-tools) to update dependencies:
 
-```sh
-pip-compile --upgrade -o dev-requirements.txt dev-requirements.in
-pip-sync dev-requirements.txt
+```bash
+make update
+# Or execute pip-tools yourself:
+# pip-compile --upgrade -o dev-requirements.txt dev-requirements.in
+# pip-sync dev-requirements.txt
 ```
