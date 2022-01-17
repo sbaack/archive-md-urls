@@ -108,7 +108,9 @@ source project_venv/bin/activate
 make setup  # Executes python -m pip install -r dev-requirements.txt
 ```
 
-Use [`pip-tools`](https://github.com/jazzband/pip-tools) to update dependencies:
+For linting, I use [flake8](https://github.com/PyCQA/flake8) (not included in the dev requirements). If you prefer other linting tools, note that this project uses a line length of 88. Also consider [flake8-annotations](https://github.com/sco1/flake8-annotations) for consistent type hinting.
+
+To update dependencies with [pip-tools](https://github.com/jazzband/pip-tools):
 
 ```bash
 make update
