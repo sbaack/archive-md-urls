@@ -15,7 +15,7 @@ setup:
 	python -m pip install -r dev-requirements.txt
 
 update:
-	pip-compile --upgrade -o dev-requirements.txt dev-requirements.in
+	pip-compile --upgrade --allow-unsafe -o dev-requirements.txt dev-requirements.in
 	pip-sync dev-requirements.txt
 
 publish: clean

@@ -115,6 +115,6 @@ To update dependencies with [pip-tools](https://github.com/jazzband/pip-tools):
 ```bash
 make update
 # Or execute pip-tools yourself:
-# pip-compile --upgrade -o dev-requirements.txt dev-requirements.in
+# pip-compile --upgrade --allow-unsafe -o dev-requirements.txt dev-requirements.in
 # pip-sync dev-requirements.txt
 ```
