@@ -105,7 +105,10 @@ cd archive-md-urls
 python -m venv project_venv
 source project_venv/bin/activate
 # Install dev-requirements:
-make setup  # Executes python -m pip install -r dev-requirements.txt
+make setup
+# If you can't use make, do it manually:
+# python -m pip install -r dev-requirements.txt
+# python -m pip install -e .
 ```
 
 For linting, I use [flake8](https://github.com/PyCQA/flake8) (not included in the dev requirements). If you prefer other linting tools, note that this project uses a line length of 88. Also consider [flake8-annotations](https://github.com/sco1/flake8-annotations) for consistent type hinting.
@@ -115,6 +118,7 @@ To update dependencies with [pip-tools](https://github.com/jazzband/pip-tools):
 ```bash
 make update
 # Or execute pip-tools yourself:
-# pip-compile --upgrade --allow-unsafe -o dev-requirements.txt dev-requirements.in
+# pip-compile --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg
 # pip-sync dev-requirements.txt
+# python -m pip install -e .
 ```

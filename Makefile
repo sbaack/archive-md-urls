@@ -1,7 +1,7 @@
 .PHONY: help setup update test clean
 
 help:
-	@echo 'setup:   installs dev requirements, includs editiable install of archive-md-urls'
+	@echo 'setup:   install dev requirements and editiable install of archive-md-urls'
 	@echo 'update:  update dev requirements with pip-tools'
 	@echo 'publish: publish new version on pypi.org'
 	@echo 'test:    run all tests'
@@ -13,10 +13,13 @@ clean:
 
 setup:
 	python -m pip install -r dev-requirements.txt
+	python -m pip install -e .
 
 update:
-	pip-compile --upgrade --allow-unsafe -o dev-requirements.txt dev-requirements.in
+	pip-compile --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg 
 	pip-sync dev-requirements.txt
+	# Unfortunately pip-sync removes editable install, so reinstall it
+	python -m pip install -e .
 
 publish: clean
 	python -m build
