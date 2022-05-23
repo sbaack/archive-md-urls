@@ -96,29 +96,51 @@ Note that Markdown files are identified by the file ending `.md`, other file end
 
 `archive-md-urls` uses [asyncio](https://docs.python.org/3/library/asyncio.html) with [HTTPX](https://www.python-httpx.org/) to make asynchronous API calls. However, do not expect to get fast results, especially (but not only) when you try to change a larger amount of URLs. The [Wayback Machine API](https://archive.org/help/wayback_api.php) can be slow or even unavailable. If `archive-md-urls` has to cancel the operation because of that, just re-run it on the same files again later. Links that have already been updated before will be skipped because archive.org links are considered stable.
 
-## Setup for local development
+## Contributing
+
+If you would like to contribute to this project, please create a [pull request from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
+
+To set up a local development environment, clone your fork and set up a virtual environment with your preferred tool. For example:
 
 ```bash
+# Here we just clone the main repository, change the URL to your fork's URL
 git clone https://github.com/sbaack/archive-md-urls.git
 cd archive-md-urls
-# Create and activate a virtualenv with your preferred tool. Example:
 python -m venv project_venv
 source project_venv/bin/activate
-# Install dev-requirements:
-make setup
-# If you can't use make, do it manually:
-# python -m pip install -r dev-requirements.txt
-# python -m pip install -e .
 ```
 
-For linting, I use [flake8](https://github.com/PyCQA/flake8) (not included in the dev requirements). If you prefer other linting tools, note that this project uses a line length of 88. Also consider [flake8-annotations](https://github.com/sco1/flake8-annotations) for consistent type hinting.
-
-To update dependencies with [pip-tools](https://github.com/jazzband/pip-tools):
+After you've activated your virtual environment you need to install an editable version of `archive-md-urls`. If you can use Gnu Make, simply call:
 
 ```bash
-make update
-# Or execute pip-tools yourself:
-# pip-compile --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg
-# pip-sync dev-requirements.txt
-# python -m pip install -e .
+make setup
 ```
+
+If you can't use Make, set it up manually:
+
+```bash
+python -m pip install --upgrade pip setuptools
+python -m pip install -e .[dev]
+```
+
+Finally, tests should pass:
+
+```bash
+make test
+# OR: python -m unittest
+```
+
+After you've added and tested your changes to make sure they work, please update the lock file `dev-requirements.txt`, which should contain the last versions of dependencies known to work. We use [pip-tools](https://github.com/jazzband/pip-tools) to update them. Simply call:
+
+```bash
+make update-deps
+```
+
+Or manually:
+
+```bash
+python -m pip install --upgrade pip-tools
+pip-compile --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg
+```
+
+For linting, I use [flake8](https://github.com/PyCQA/flake8) (not included in the dev requirements). If you prefer other linting tools, note that this project uses a line length of 88. Also consider [flake8-annotations](https://github.com/sco1/flake8-annotations) to consistently use type hints.
