@@ -1,31 +1,37 @@
-.PHONY: help setup update-deps test clean
+.PHONY: help update-deps setup clean pipx-upload pipx-publish upload publish test
 
 help:
-	@echo 'setup:        install dev requirements and editiable install of archive-md-urls'
-	@echo 'update-deps:  update dev requirements with pip-tools'
-	@echo 'publish:      publish new version on pypi.org'
-	@echo 'test:         run all tests'
 	@echo 'clean:        remove dist and .egg-info directory'
+	@echo 'pipx-publish: publish new version on pypi.org using pipx run'
+	@echo 'publish:      publish new version on pypi.org using local installs'
+	@echo 'test:         run all tests'
+	@echo 'update-deps:  update pip and project dependencies'
+	@echo 'setup:        editiable install of archive-md-urls'
+
+update-deps:
+	python -m pip install -U pip
+	python -m pip install -Ue .
+
+setup: update-deps
 
 clean:
 	rm -rf dist
 	rm -rf src/*.egg-info
 
-setup:
-	python -m pip install --upgrade pip setuptools
-	python -m pip install -e .[dev]
+pipx-upload: clean
+	pipx run build
+	pipx run twine check dist/*
+	pipx run twine upload dist/*
 
-update-deps:
-	python -m pip install --upgrade pip setuptools pip-tools
-	pip-compile --quiet --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg 
-	pip-sync dev-requirements.txt
-# Unfortunately pip-sync removes editable install, so reinstall it
-	python -m pip install --quiet -e .
+pipx-publish: pipx-upload clean
 
-publish: clean
+upload: clean
+	python -m pip install -U build twine
 	python -m build
 	python -m twine check dist/*
 	python -m twine upload dist/*
 
+publish: upload clean
+
 test:
-	python -m unittest
+	hatch run tests:test

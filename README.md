@@ -119,28 +119,13 @@ make setup
 If you can't use Make, set it up manually:
 
 ```bash
-python -m pip install --upgrade pip setuptools
-python -m pip install -e .[dev]
+python -m pip install --upgrade pip
+python -m pip install -Ue .[dev]
 ```
 
-Finally, tests should pass:
+Finally, tests should pass. To run tests, you need to have [hatch](https://hatch.pypa.io/latest/) installed.
 
 ```bash
 make test
-# OR: python -m unittest
+# OR: hatch run tests:test
 ```
-
-After you've added and tested your changes to make sure they work, please update the lock file `dev-requirements.txt`, which should contain the last versions of dependencies known to work. We use [pip-tools](https://github.com/jazzband/pip-tools) to update them. Simply call:
-
-```bash
-make update-deps
-```
-
-Or manually:
-
-```bash
-python -m pip install --upgrade pip-tools
-pip-compile --upgrade --allow-unsafe --extra dev -o dev-requirements.txt setup.cfg
-```
-
-For linting, I use [flake8](https://github.com/PyCQA/flake8) (not included in the dev requirements). If you prefer other linting tools, note that this project uses a line length of 88. Also consider [flake8-annotations](https://github.com/sco1/flake8-annotations) to consistently use type hints.
