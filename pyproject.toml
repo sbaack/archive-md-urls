@@ -4,7 +4,7 @@ build-backend = "hatchling.build"
 
 [project]
 name = "archive-md-urls"
-version = "0.0.6"
+version = "0.0.7"
 license = { file="LICENSE" }
 authors = [{name = "Stefan Baack"}]
 description = "Turn URLs in Markdown files into archive.org snapshots"
