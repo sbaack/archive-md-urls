@@ -70,13 +70,14 @@ def get_closest(api_response: dict[str, Any]) -> Optional[str]:
     Returns:
         Optional[str]: URL of Wayback Machine snapshot, if any was found
     """
-    if not api_response['archived_snapshots']:
+    if not api_response["archived_snapshots"]:
         return None
-    return api_response['archived_snapshots']['closest']['url']
+    return api_response["archived_snapshots"]["closest"]["url"]
 
 
 async def gather_snapshots(
-        urls: list[str], timestamp: str = None) -> dict[str, Optional[str]]:
+    urls: list[str], timestamp: str = None
+) -> dict[str, Optional[str]]:
     """Create HTTPX session for API calls and return gathered snapshots.
 
     To make asynchronous calls, create a task list for calling the call_api function

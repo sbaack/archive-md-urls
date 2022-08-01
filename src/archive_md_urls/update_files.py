@@ -27,8 +27,10 @@ async def update_files(files: list[Path]) -> None:
         updated_md_source: str = update_md_source(md_source, wayback_urls)
         file.write_text(updated_md_source, encoding="utf-8")
         changed_urls += len([item for item in wayback_urls.values() if item])
-    print(f"Changed {changed_urls} {'URL' if changed_urls == 1 else 'URLs'} "
-          f"in {len(files)} {'file' if len(files) == 1 else 'files'}.")
+    print(
+        f"Changed {changed_urls} {'URL' if changed_urls == 1 else 'URLs'} "
+        f"in {len(files)} {'file' if len(files) == 1 else 'files'}."
+    )
 
 
 def update_md_source(md_source: str, wayback_urls: dict[str, Optional[str]]) -> str:
@@ -46,5 +48,5 @@ def update_md_source(md_source: str, wayback_urls: dict[str, Optional[str]]) -> 
         if snapshot:
             # Only replace strings which are == url if they are preceded and
             # followed by braces to avoid mismatches
-            md_source = re.sub(fr"(?<=\(){url}(?=\))", snapshot, md_source)
+            md_source = re.sub(rf"(?<=\(){url}(?=\))", snapshot, md_source)
     return md_source

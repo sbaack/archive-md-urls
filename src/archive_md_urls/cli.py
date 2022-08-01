@@ -25,13 +25,9 @@ def get_md_files(items: list[Path], recursive: bool) -> list[Path]:
     for item in items:
         if item.is_dir():
             if recursive:
-                files.extend(
-                    list(item.rglob("**/*.md"))
-                )
+                files.extend(list(item.rglob("**/*.md")))
             else:
-                files.extend(
-                    list(item.glob("*.md"))
-                )
+                files.extend(list(item.glob("*.md")))
         elif item.is_file():
             if item.suffix == ".md":
                 files.append(item)
@@ -40,9 +36,11 @@ def get_md_files(items: list[Path], recursive: bool) -> list[Path]:
         else:
             sys.exit(f"Not a file or directory: {item}.")
     if not files:
-        sys.exit("Couldn't find any Markdown files. Do you use the file ending .md for "
-                 "your Markdown files? If yes, you could try to search directories "
-                 "recursively using the -r flag (see help).")
+        sys.exit(
+            "Couldn't find any Markdown files. Do you use the file ending .md for "
+            "your Markdown files? If yes, you could try to search directories "
+            "recursively using the -r flag (see help)."
+        )
     return files
 
 
@@ -53,16 +51,16 @@ def parse_args() -> argparse.Namespace:
     )
     argparser.add_argument(
         "items",
-        nargs='+',
+        nargs="+",
         type=Path,
         help="Markdown file, or directory containing Markdown files. You can specify "
-             "multiple items and combine individual files with directories"
+        "multiple items and combine individual files with directories",
     )
     argparser.add_argument(
         "-r",
         "--recursive",
         action="store_true",
-        help="Recursively search for Markdown files in subdirectories"
+        help="Recursively search for Markdown files in subdirectories",
     )
     return argparser.parse_args()
 

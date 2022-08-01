@@ -48,7 +48,7 @@ STABLE_URLS: tuple[str, ...] = (
     "https://tools.ietf.org/html/",
     "https://identifiers.org/rrid/",
     "http://papers.ssrn.com/abstract_id=",
-    "http://zbmath.org/?format=complete&q="
+    "http://zbmath.org/?format=complete&q=",
 )
 
 
@@ -83,10 +83,10 @@ def convert_markdown(md_source: str) -> tuple[str, Optional[str]]:
         tuple[str, dict[str, Optional[str]]: HTML version of Markdown file and date from
                                              Markdown metadata
     """
-    md: markdown.core.Markdown = markdown.Markdown(extensions=['meta'])
+    md: markdown.core.Markdown = markdown.Markdown(extensions=["meta"])
     html: str = md.convert(md_source)
     try:
-        date: Optional[str] = md.Meta['date'][0]
+        date: Optional[str] = md.Meta["date"][0]
     except KeyError:
         date = None
     return html, date
@@ -129,8 +129,9 @@ def filter_urls(md_urls: list[str]) -> list[str]:
     # Remove duplicates
     urls: list[str] = list(set(md_urls))
     # Filter out stable URLs
-    return [url for url in urls if not
-            any(stable_url in url for stable_url in STABLE_URLS)]
+    return [
+        url for url in urls if not any(stable_url in url for stable_url in STABLE_URLS)
+    ]
 
 
 def get_urls(html: str) -> list[str]:
@@ -143,4 +144,4 @@ def get_urls(html: str) -> list[str]:
         list[str]: URLs found in HTML
     """
     soup = BeautifulSoup(html, "html.parser")
-    return [a.get('href') for a in soup.find_all('a', href=True)]
+    return [a.get("href") for a in soup.find_all("a", href=True)]

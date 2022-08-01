@@ -3,9 +3,15 @@ from typing import Any
 from unittest import mock
 
 from archive_md_urls import scan_md
-from tests.testfiles import (TEST_MD1, TEST_MD1_SOURCE, TEST_MD2,
-                             TEST_MD2_SOURCE, TEST_MD3, TEST_MD3_SOURCE,
-                             TEST_YAML_SOURCE)
+from tests.testfiles import (
+    TEST_MD1,
+    TEST_MD1_SOURCE,
+    TEST_MD2,
+    TEST_MD2_SOURCE,
+    TEST_MD3,
+    TEST_MD3_SOURCE,
+    TEST_YAML_SOURCE,
+)
 
 
 class TestScanMD(unittest.TestCase):
@@ -17,7 +23,9 @@ class TestScanMD(unittest.TestCase):
         urls: list[str] = scan_md.get_urls(html)
         # Filtered list should only contain example.com and both Github URLs
         correct_filtered_result: list[str] = [
-            "example.com", "github.com", "https://github.com/pypa/pip"
+            "example.com",
+            "github.com",
+            "https://github.com/pypa/pip",
         ]
         # Result from filter_urls should have correct length and should contain
         # all elements of filtered_result
@@ -63,11 +71,13 @@ class TestScanMD(unittest.TestCase):
         html, date = scan_md.convert_markdown(TEST_MD1_SOURCE)
         # All URLs contained in the test file
         full_url_list: list[str] = [
-            "example.com", "example.com",
-            "github.com", "https://github.com/pypa/pip",
+            "example.com",
+            "example.com",
+            "github.com",
+            "https://github.com/pypa/pip",
             "https://web.archive.org/web/20000622042643/http://www.google.com/",
             "https://doi.org/10.1080/32498327493.2014.358732798",
-            "{filename}/blog/2012/2012-02-05-an-even-older-blogpost.md"
+            "{filename}/blog/2012/2012-02-05-an-even-older-blogpost.md",
         ]
         self.assertEqual(scan_md.get_urls(html), full_url_list)
 
