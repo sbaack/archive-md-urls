@@ -55,10 +55,10 @@ Note how only the first link to example.com has been altered and points to a sna
 You can install `archive-md-urls` via pip:
 
 ```bash
-pip install archive-md-urls
+python -m pip install archive-md-urls
 ```
 
-However, using [Pipx](https://pypa.github.io/pipx/) is recommended:
+However, using [`Pipx`](https://pypa.github.io/pipx/) is recommended:
 
 ```bash
 pipx install archive-md-urls
@@ -103,29 +103,30 @@ If you would like to contribute to this project, please create a [pull request f
 To set up a local development environment, clone your fork and set up a virtual environment with your preferred tool. For example:
 
 ```bash
-# Here we just clone the main repository, change the URL to your fork's URL
+# Here we just clone the main repository, change it to your fork's URL
 git clone https://github.com/sbaack/archive-md-urls.git
 cd archive-md-urls
-python -m venv project_venv
-source project_venv/bin/activate
+python -m venv .venv && source .venv/bin/activate
 ```
 
-After you've activated your virtual environment you need to install an editable version of `archive-md-urls`. If you can use Gnu Make, simply call:
+Install an editable version of `archive-md-urls`:
 
 ```bash
 make setup
+# OR, if you can't use Gnu Make:
+python -m pip install -U pip -Ue .
 ```
 
-If you can't use Make, set it up manually:
+In addition, you'll need [hatch](https://hatch.pypa.io/latest/) to run tests. If you don't already have hatch installed via Pipx, Conda etc., install it in the project venv: 
 
 ```bash
-python -m pip install --upgrade pip
-python -m pip install -Ue .[dev]
+python -m pip install -U hatch
 ```
 
-Finally, tests should pass. To run tests, you need to have [hatch](https://hatch.pypa.io/latest/) installed.
+Tests should pass before submitting a pull request:
 
 ```bash
 make test
-# OR: hatch run tests:test
+# OR:
+hatch run tests:test
 ```
