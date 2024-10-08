@@ -37,4 +37,4 @@ archive-md-urls = "archive_md_urls.cli:main"
 test = "python -m unittest"
 
 [[tool.hatch.envs.tests.matrix]]
-python = ["39", "310", "311"]
+python = ["39", "310", "311", "312", "313"]
