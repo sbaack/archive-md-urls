@@ -29,7 +29,7 @@ async def update_files(files: list[Path]) -> None:
         changed_urls += len([item for item in wayback_urls.values() if item])
     print(
         f"Changed {changed_urls} {'URL' if changed_urls == 1 else 'URLs'} "
-        f"in {len(files)} {'file' if len(files) == 1 else 'files'}."
+        + f"in {len(files)} {'file' if len(files) == 1 else 'files'}."
     )
 
 

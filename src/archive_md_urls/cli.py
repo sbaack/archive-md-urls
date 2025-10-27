@@ -37,8 +37,8 @@ def get_md_files(items: list[Path], recursive: bool) -> list[Path]:
             sys.exit(f"Not a file or directory: {item}.")
     if not files:
         sys.exit(
-            "Couldn't find any Markdown files. Do you use the file ending .md for "
-            "your Markdown files? If yes, you could try to search directories "
+            "Couldn't find any Markdown files. Do you use the file ending .md for " +
+            "your Markdown files? If yes, you could try to search directories " +
             "recursively using the -r flag (see help)."
         )
     return files
@@ -53,7 +53,7 @@ def parse_args() -> argparse.Namespace:
         "items",
         nargs="+",
         type=Path,
-        help="Markdown file, or directory containing Markdown files. You can specify "
+        help="Markdown file, or directory containing Markdown files. You can specify " +
         "multiple items and combine individual files with directories",
     )
     argparser.add_argument(
