@@ -8,7 +8,7 @@ snapshot. If no snapshot available, return None.
 
 import asyncio
 import sys
-from typing import Any, Optional
+from typing import Any
 
 import httpx
 import tenacity
@@ -43,12 +43,12 @@ async def call_api(client: httpx.AsyncClient, api_call: str) -> dict[str, Any]:
     return response.json()
 
 
-def build_api_call(url: str, timestamp: Optional[str] = None) -> str:
+def build_api_call(url: str, timestamp: str | None = None) -> str:
     """Return valid achive.org API call.
 
     Args:
         url (str): URL to be searched in the Wayback Machine
-        timestamp (Optional[str], optional): Timestamp for desired snapshot
+        timestamp (str | None, optional): Timestamp for desired snapshot
 
     Returns:
         str: Valid archive.org API call
@@ -59,7 +59,7 @@ def build_api_call(url: str, timestamp: Optional[str] = None) -> str:
     return api_call
 
 
-def get_closest(api_response: dict[str, Any]) -> Optional[str]:
+def get_closest(api_response: dict[str, Any]) -> str | None:
     """Get URL of closest snapshot from API response if available.
 
     Returns None if API response is empty.
@@ -68,7 +68,7 @@ def get_closest(api_response: dict[str, Any]) -> Optional[str]:
         api_response: dict[str, Any]: API response as JSON
 
     Returns:
-        Optional[str]: URL of Wayback Machine snapshot, if any was found
+        str | None: URL of Wayback Machine snapshot, if any was found
     """
     if not api_response["archived_snapshots"]:
         return None
@@ -77,7 +77,7 @@ def get_closest(api_response: dict[str, Any]) -> Optional[str]:
 
 async def gather_snapshots(
     urls: list[str], timestamp: str = None
-) -> dict[str, Optional[str]]:
+) -> dict[str, str | None]:
     """Create HTTPX session for API calls and return gathered snapshots.
 
     To make asynchronous calls, create a task list for calling the call_api function
@@ -86,10 +86,10 @@ async def gather_snapshots(
 
     Args:
         urls (list[str]): Urls to send to the Wayback Machine API
-        timestamp (Optional[str]): Timestamp to send to the Wayback Machine API
+        timestamp (str | None): Timestamp to send to the Wayback Machine API
 
     Returns:
-        dict[str, Optional[str]]: API call results with original URL as keys and Wayback
+        dict[str, str | None]: API call results with original URL as keys and Wayback
                                   snapshot URLs as values
     """
     async with httpx.AsyncClient(timeout=None) as client:
@@ -105,7 +105,7 @@ async def gather_snapshots(
         except tenacity.RetryError:
             sys.exit("API appears unresponsive, please try again later.")
         # Build url-snapshot pairs from results
-        wayback_urls: dict[str, Optional[str]] = {}
+        wayback_urls: dict[str, str | None] = {}
         for api_response in api_responses:
             wayback_urls[api_response["url"]] = get_closest(api_response)
     return wayback_urls

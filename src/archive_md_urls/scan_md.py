@@ -1,7 +1,6 @@
 """Extract dates and URLs from Markdown files."""
 
 from pathlib import Path
-from typing import Optional
 
 import dateutil.parser
 import markdown
@@ -52,7 +51,7 @@ STABLE_URLS: tuple[str, ...] = (
 )
 
 
-def scan_md(md_source: str, md_file: Path) -> tuple[Optional[str], list[str]]:
+def scan_md(md_source: str, md_file: Path) -> tuple[str | None, list[str]]:
     """Extract date and URLs from specified Markdown file.
 
     To get the date, first try to extract it from Markdown meta information. If no date
@@ -65,7 +64,7 @@ def scan_md(md_source: str, md_file: Path) -> tuple[Optional[str], list[str]]:
         md_file (Path): Markdown file path
 
     Returns:
-        tuple[Optional[str], list[str]]: Formatted date (if found) and list of URLs
+        tuple[str | None, list[str]]: Formatted date (if found) and list of URLs
     """
     html, date = convert_markdown(md_source)
     if not date:
@@ -73,26 +72,26 @@ def scan_md(md_source: str, md_file: Path) -> tuple[Optional[str], list[str]]:
     return format_date(date), filter_urls(get_urls(html))
 
 
-def convert_markdown(md_source: str) -> tuple[str, Optional[str]]:
+def convert_markdown(md_source: str) -> tuple[str, str | None]:
     """Convert Markdown file to HTML and extract date from metadata.
 
     Args:
         md_file (str): Contents of the Markdown file
 
     Returns:
-        tuple[str, dict[str, Optional[str]]: HTML version of Markdown file and date from
+        tuple[str, dict[str, str | None]: HTML version of Markdown file and date from
                                              Markdown metadata
     """
     md: markdown.core.Markdown = markdown.Markdown(extensions=["meta"])
     html: str = md.convert(md_source)
     try:
-        date: Optional[str] = md.Meta["date"][0]
+        date: str | None = md.Meta["date"][0]
     except KeyError:
         date = None
     return html, date
 
 
-def format_date(date: str) -> Optional[str]:
+def format_date(date: str) -> str | None:
     """Format date according to Wayback Machine API format.
 
     Use dateutil.parser to recognize dates and return them as YYYYMMDDhhmm. If hour and
@@ -102,7 +101,7 @@ def format_date(date: str) -> Optional[str]:
         date (str): Date extracted from Markdown metadata or file name
 
     Returns:
-        Optional[str]: Date formatted as YYYYMMDDhhmm
+        str | None: Date formatted as YYYYMMDDhhmm
     """
     try:
         return dateutil.parser.parse(date).strftime("%Y%m%d%H%M")

@@ -2,7 +2,6 @@
 
 import re
 from pathlib import Path
-from typing import Optional
 
 from archive_md_urls.gather_snapshots import gather_snapshots
 from archive_md_urls.scan_md import scan_md
@@ -22,7 +21,7 @@ async def update_files(files: list[Path]) -> None:
         md_source: str = file.read_text(encoding="utf-8")
         date, urls = scan_md(md_source, file)
         # Call API and collect snapshots
-        wayback_urls: dict[str, Optional[str]] = await gather_snapshots(urls, date)
+        wayback_urls: dict[str, str | None] = await gather_snapshots(urls, date)
         # Update links in file source and write file
         updated_md_source: str = update_md_source(md_source, wayback_urls)
         file.write_text(updated_md_source, encoding="utf-8")
@@ -33,12 +32,12 @@ async def update_files(files: list[Path]) -> None:
     )
 
 
-def update_md_source(md_source: str, wayback_urls: dict[str, Optional[str]]) -> str:
+def update_md_source(md_source: str, wayback_urls: dict[str, str | None]) -> str:
     """Replace URLs in Markdown file with Wayback Snapshots.
 
     Args:
         md_source (str): Content of Markdown file that should be updated
-        wayback_urls (dict[str, Optional[str]]): URL-Snapshot pairs
+        wayback_urls (dict[str, str | None]): URL-Snapshot pairs
 
     Returns:
         str: Content of Markdown file with updated URLs
