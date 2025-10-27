@@ -2,7 +2,7 @@
 
 Given a URL and (optionally) a timestamp, return the URL of the archive.org
 snapshot closest to the provided timestamp. If no timestamp is provided or no
-snapshot for the provided timestamp cannot be found, return the latest
+snapshot for the provided timestamp can be found, return the latest
 snapshot. If no snapshot available, return None.
 """
 
