@@ -2,7 +2,7 @@
 
 `archive-md-urls` scans Markdown files for URLs and if possible turns them into links to snapshots from [archive.org](https://archive.org/). If a publication date can be extracted from the file ([more info](https://github.com/sbaack/archive-md-urls/wiki/How-publication-dates-are-detected)), the snapshots closest to this date will be used. If no date can be found, the latest available snapshots are used instead.
 
-This is very useful when you use a static site generator for your personal homepage that supports Markdown for writing blogposts and pages, e.g. [Pelican](https://blog.getpelican.com/), [Jekyll](https://jekyllrb.com/) or [Hugo](https://gohugo.io/). Older content published years ago is likely to contain [link rot](https://en.wikipedia.org/wiki/Link_rot): links that are simply broken or now point to a different target compared to when you wrote the content. In an ideal scenario, `archive-md-urls` will not only fix these URLs, but also link to a snapshot that shows how a website or social media profile/post looked like when you wrote the content.
+This is very useful when you use a static site generator for your personal homepage that supports Markdown for writing blogposts and pages, e.g. [Pelican](https://blog.getpelican.com/), [Jekyll](https://jekyllrb.com/), [Hugo](https://gohugo.io/) and [Zola](https://www.getzola.org/). Older content published years ago is likely to contain [link rot](https://en.wikipedia.org/wiki/Link_rot): links that are simply broken or now point to a different target compared to when you wrote the content. In an ideal scenario, `archive-md-urls` will not only fix these URLs, but also link to a snapshot that shows how a website or social media profile/post looked like when you wrote the content.
 
 `archive-md-urls` tries to be smart and does not simply replace every URL it finds. Instead, it uses a [list of URLs which are considered 'stable'](https://github.com/sbaack/archive-md-urls/wiki/List-of-stable-URLs) and are therefore ignored: URLs that already point to archive.org snapshots, intra-site links (e.g. a link to another blogpost on the same homepage) and URLs that contain [persistent identifiers](http://en.wikipedia.org/wiki/Persistent_identifier).
 
@@ -21,7 +21,7 @@ But it also links to URLs which can be considered 'stable':
 
 - [here](https://web.archive.org/web/20000622042643/http://www.google.com/) we already link to an archive.org snapshot
 - [here](https://doi.org/10.1080/32498327493.2014.358732798) the link contains a persistent identifier
-- and [here]({filename}/blog/2012/2012-02-05-an-even-older-blogpost.md) we link to a different post on our own homepage (Pelican format, Jekyll and Hugo intra-site links are supported too)
+- and [here]({filename}/blog/2012/2012-02-05-an-even-older-blogpost.md) we link to a different post on our own homepage (Pelican format, Jekyll, Hugo and Zola intra-site links are supported too)
 
 In addition, google.com is mentioned but not explicitly linked.
 
@@ -41,7 +41,7 @@ But it also links to URLs which can be considered 'stable':
 
 - [here](https://web.archive.org/web/20000622042643/http://www.google.com/) we already link to an archive.org snapshot
 - [here](https://doi.org/10.1080/32498327493.2014.358732798) the link contains a persistent identifier
-- and [here]({filename}/blog/2012/2012-02-05-an-even-older-blogpost.md) we link to a different post on our own homepage (Pelican format, Jekyll and Hugo intra-site links are supported too)
+- and [here]({filename}/blog/2012/2012-02-05-an-even-older-blogpost.md) we link to a different post on our own homepage (Pelican format, Jekyll, Hugo and Zola intra-site links are supported too)
 
 In addition, google.com is mentioned but not explicitly linked.
 

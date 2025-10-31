@@ -18,6 +18,8 @@ STABLE_URLS: tuple[str, ...] = (
     # Hugo intra-site links
     "{{< ref",
     "{{< relref",
+    # Zola intra-site links
+    "](@/",
     # Persistent identifier list from ORCID (https://pub.orcid.org/v2.0/identifiers)
     "https://arxiv.org/abs/",
     "http://www.amazon.com/dp/",
@@ -116,7 +118,7 @@ def filter_urls(md_urls: list[str]) -> list[str]:
     Filter out duplicates and remove URLs that are considered stable:
 
     - URLs that already point to archive.org
-    - Intra-site links (recognizes Pelican, Jekyll and Hugo intra-site link formats)
+    - Intra-site links (recognizes Pelican, Jekyll, Hugo and Zola intra-site link formats)
     - URLs containing stable identifiers
 
     Args:
