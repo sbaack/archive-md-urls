@@ -1,37 +1,29 @@
-.PHONY: help update-deps setup clean pipx-upload pipx-publish upload publish test
+.PHONY: all clean help publish test setup update-deps
 
-help:
-	@echo 'clean:        remove dist and .egg-info directory'
-	@echo 'pipx-publish: publish new version on pypi.org using pipx run'
-	@echo 'publish:      publish new version on pypi.org using local installs'
-	@echo 'test:         run all tests'
-	@echo 'update-deps:  update pip and project dependencies'
-	@echo 'setup:        editiable install of archive-md-urls'
-
-update-deps:
-	python -m pip install -U pip
-	python -m pip install -Ue .
-
-setup: update-deps
+all: test
 
 clean:
 	rm -rf dist
 	rm -rf src/*.egg-info
 
-pipx-upload: clean
-	pipx run build
-	pipx run twine check dist/*
-	pipx run twine upload dist/*
+help:
+	@echo 'clean:        remove dist and .egg-info directory'
+	@echo 'publish:      publish new version on pypi.org'
+	@echo 'test:         run all tests'
+	@echo 'setup:        editiable install of archive-md-urls'
+	@echo 'update-deps:  update project dependencies'
 
-pipx-publish: pipx-upload clean
-
-upload: clean
-	python -m pip install -U build twine
-	python -m build
-	python -m twine check dist/*
-	python -m twine upload dist/*
-
-publish: upload clean
+publish:
+	clean
+	uv build
+	uv publish
+	clean
 
 test:
-	hatch run tests:test
+	uv run hatch run tests:test
+
+setup:
+	uv sync
+
+update-deps:
+	uv lock --upgrade
