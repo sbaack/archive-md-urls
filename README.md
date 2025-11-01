@@ -52,13 +52,7 @@ Note how only the first link to example.com has been altered and points to a sna
 
 ## Install
 
-If you don't want to use any additional tool for installing Python packages, you can simply install `archive-md-urls` via `pip` (preferably in a virtual environment!):
-
-```bash
-python -m pip install archive-md-urls
-```
-
-However, the best way to install or run `archive-md-urls` is via [`uv`](https://github.com/astral-sh/uv) or [`pipx`](https://pypa.github.io/pipx/) (I recommend `uv` because it's faster). Both tools can install and run packages in a temporary virtual environment that will be discarded automatically after some time, which is very useful for applications like `archive-md-urls` that you probably will only run once every so often (see next section of this readme on how to use `archive-md-urls`):
+Since you probably won't need `archive-md-urls` frequently, the recommended way to use it is via [`uvx`](https://docs.astral.sh/uv/guides/tools/) or [`pipx run`](https://pipx.pypa.io/stable/docs/#pipx-run). Both methods install and run packages in a temporary virtual environment that will be discarded automatically after some time. If you're unfamiliar with these tools, I recommend using `uv`. Here is how you would use `archive-md-urls` to convert URLs in a single file with them (see next section of this readme on how to use `archive-md-urls`):
 
 ```bash
 # uv
@@ -67,13 +61,19 @@ uvx archive-md-urls file.md
 pipx run archive-md-urls file.md
 ```
 
-Of course, you can also install `archive-md-urls` using these tools:
+You can also install `archive-md-urls` permanently using these tools:
 
 ```bash
 # uv
 uv tool install archive-md-urls
 # pipx
 pipx install archive-md-urls
+```
+
+If you don't want to use any additional tool for installing Python packages, you can simply install `archive-md-urls` via `pip` (preferably in a virtual environment!):
+
+```bash
+python -m pip install archive-md-urls
 ```
 
 ## Usage
