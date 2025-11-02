@@ -1,3 +1,6 @@
+# For publishing, PyPi token should be stored as UV_PUBLISH_TOKEN in .env
+-include .env
+export
 
 .PHONY: all
 all: test
