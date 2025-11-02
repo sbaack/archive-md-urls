@@ -13,11 +13,10 @@ help:
 	@echo 'setup:        editiable install of archive-md-urls'
 	@echo 'update-deps:  update project dependencies'
 
-publish:
-	clean
+publish: clean
 	uv build
 	uv publish
-	clean
+	$(MAKE) clean
 
 test:
 	uv run hatch run tests:test
