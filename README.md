@@ -110,35 +110,14 @@ Note that Markdown files are identified by the file ending `.md`, other file end
 
 ## Contributing
 
-If you would like to contribute to this project, please create a [pull request from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork).
-
-To set up a local development environment, clone your fork and set up a virtual environment with your preferred tool. For example:
+If you would like to contribute to this project, please create a [pull request from a fork](https://docs.github.com/en/pull-requests/collaborating-with-pull-requests/proposing-changes-to-your-work-with-pull-requests/creating-a-pull-request-from-a-fork). The provided Makefile for setting up your virtual environment assumes you're using `uv`. After cloning your fork, simply call:
 
 ```bash
-# Here we just clone the main repository, change it to your fork's URL
-git clone https://github.com/sbaack/archive-md-urls.git
-cd archive-md-urls
-python -m venv .venv && source .venv/bin/activate
+make setup # Or call `uv sync`
 ```
 
-Install an editable version of `archive-md-urls`:
+This will also install [hatch](https://hatch.pypa.io/latest/), which is used to run tests in various Python versions. These tests should pass before submitting a pull request:
 
 ```bash
-make setup
-# OR, if you can't use Gnu Make:
-python -m pip install -U pip -Ue .
-```
-
-In addition, you'll need [hatch](https://hatch.pypa.io/latest/) to run tests. If you don't already have hatch installed via Pipx, Conda etc., install it in the project venv: 
-
-```bash
-python -m pip install -U hatch
-```
-
-Tests should pass before submitting a pull request:
-
-```bash
-make test
-# OR:
-hatch run tests:test
+make # Or call `make test` or `hatch run tests:test`
 ```

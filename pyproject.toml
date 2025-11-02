@@ -33,6 +33,11 @@ Homepage = "https://github.com/sbaack/archive-md-urls"
 [project.scripts]
 archive-md-urls = "archive_md_urls.cli:main"
 
+[dependency-groups]
+dev = [
+    "hatch>=1.15.1",
+]
+
 [tool.hatch.envs.tests.scripts]
 test = "python -m unittest"
 
